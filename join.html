@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join BCC | Bharat Cyber Commando</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #030712, #071b35, #020617);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .join-container {
+      width: 100%;
+      max-width: 750px;
+      text-align: center;
+      padding: 45px 30px;
+      border: 1px solid rgba(0, 217, 255, 0.4);
+      border-radius: 22px;
+      background: rgba(8, 24, 48, 0.88);
+      box-shadow: 0 0 35px rgba(0, 195, 255, 0.12);
+    }
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .brand {
+      color: #00e5ff;
+      font-size: 15px;
+      letter-spacing: 4px;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      margin-bottom: 15px;
+      color: #ffffff;
+      text-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+    }
+
+    .subtitle {
+      color: #00e5ff;
+      font-size: 19px;
+      margin-bottom: 18px;
+    }
+
+    .description {
+      color: #cbd5e1;
+      line-height: 1.8;
+      max-width: 560px;
+      margin: 0 auto 30px;
+    }
+
+    .divisions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .division {
+      padding: 22px 18px;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 14px;
+      transition: 0.3s;
+    }
+
+    .division:hover {
+      transform: translateY(-4px);
+      border-color: #00e5ff;
+      box-shadow: 0 0 18px rgba(0, 229, 255, 0.12);
+    }
+
+    .division h2 {
+      color: #00e5ff;
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .division p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .join-btn {
+      display: inline-block;
+      padding: 16px 34px;
+      border-radius: 9px;
+      background: linear-gradient(90deg, #007cf0, #00e5ff);
+      color: #00101e;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s;
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.22);
+    }
+
+    .join-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.45);
+    }
+
+    .note {
+      margin-top: 20px;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    footer {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 229, 255, 0.15);
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .join-container {
+        padding: 32px 18px;
+      }
+
+      .divisions {
+        grid-template-columns: 1fr;
+      }
+
+      .join-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="join-container">
+
+    <!-- Replace with your actual BCC logo filename -->
+    <img src="assets/images/bcc-logo.jpeg"
+         alt="BCC Logo"
+         class="logo">
+
+    <p class="brand">BHARAT CYBER COMMANDO</p>
+
+    <h1>JOIN BCC</h1>
+
+    <p class="subtitle">Learn. Code. Build.</p>
+
+    <p class="description">
+      Become a part of Bharat Cyber Commando (BCC), an
+      unincorporated software development organization focused
+      on software development, technology and cybersecurity.
+      Explore your interests, learn new skills and contribute
+      to meaningful projects with our team.
+    </p>
+
+    <section class="divisions">
+
+      <div class="division">
+        <h2>01 / Code Command</h2>
+        <p>
+          Programming, graphic designing, editing and
+          video designing.
+        </p>
+      </div>
+
+      <div class="division">
+        <h2>02 / SCDIAS</h2>
+        <p>
+          Secure Cyber Defence & Intelligence Agency Squad.
+          Explore responsible cybersecurity and defence technology.
+        </p>
+      </div>
+
+    </section>
+
+    <a
+      href="https://form.jotform.com/263041722859056"
+      class="join-btn"
+      target="_blank"
+      rel="noopener noreferrer">
+      JOIN BCC NOW &nbsp; →
+    </a>
+    <br><br>
+    <a
+    href="index.html"
+    class="join-btn"
+    target="_blank"
+    rel="noopener noreferrer">
+    Back →
+  </a>
+    <p class="note">
+      Click the button above to open the official BCC joining form.
+      Submission of the form does not automatically guarantee membership.
+    </p>
+
+    <footer>
+      © 2026 Bharat Cyber Commando (BCC)<br>
+      Securing India, Developing Indian Software
+    </footer>
+
+  </main>
+</body>
+</html>

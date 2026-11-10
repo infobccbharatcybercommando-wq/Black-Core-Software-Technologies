@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Become a Friend | BCC</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      color: #fff;
+      background:
+        radial-gradient(circle at top, #10365c, transparent 45%),
+        linear-gradient(135deg, #020617, #071b35, #030712);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 720px;
+      text-align: center;
+      padding: 42px 28px;
+      background: rgba(7, 24, 48, 0.92);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      border-radius: 22px;
+      box-shadow: 0 0 35px rgba(0, 200, 255, 0.13);
+    }
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      color: #00e5ff;
+      font-size: 14px;
+      letter-spacing: 3px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #00e5ff;
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 48px);
+      margin-bottom: 16px;
+      text-shadow: 0 0 18px rgba(0, 229, 255, 0.25);
+    }
+
+    h1 span {
+      color: #00e5ff;
+    }
+
+    .subtitle {
+      font-size: 19px;
+      color: #b9d9f5;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      color: #cbd5e1;
+      line-height: 1.8;
+      max-width: 530px;
+      margin: 0 auto 28px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .feature {
+      padding: 18px 8px;
+      background: rgba(0, 229, 255, 0.06);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 12px;
+      color: #dbeafe;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .feature strong {
+      display: block;
+      color: #00e5ff;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .friend-btn {
+      display: inline-block;
+      width: 100%;
+      max-width: 340px;
+      padding: 16px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #00111d;
+      background: linear-gradient(90deg, #008cff, #00e5ff);
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .friend-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+    }
+
+    .note {
+      margin-top: 18px;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    footer {
+      border-top: 1px solid rgba(0, 229, 255, 0.15);
+      margin-top: 30px;
+      padding-top: 20px;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 32px 18px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <img src="assets/images/bcc-logo.jpeg" alt="BCC Logo" class="logo">
+
+    <p class="brand">BHARAT CYBER COMMANDO</p>
+
+    
+    <h1>Become a <span>BCC Friend</span></h1>
+
+    <p class="subtitle">
+      Connect. Collaborate. Grow Together.
+    </p>
+
+    <p class="description">
+      Support Bharat Cyber Commando and stay connected
+      with our journey in software development, technology
+      and cybersecurity. Fill out the friend form to express
+      your interest in becoming a BCC Friend.
+    </p>
+
+    <section class="features">
+      <div class="feature">
+        <strong>Connect</strong>
+        Stay connected with BCC.
+      </div>
+
+      <div class="feature">
+        <strong>Explore</strong>
+        Discover our projects.
+      </div>
+
+      <div class="feature">
+        <strong>Collaborate</strong>
+        Grow through technology.
+      </div>
+    </section>
+
+    <a href="https://form.jotform.com/263044716927058" class="friend-btn" target="_blank" rel="noopener noreferrer">
+      BECOME A BCC FRIEND &nbsp; →
+    </a>
+    <br><br>
+      <a
+      href="index.html" class="friend-btn" target="_blank" rel="noopener noreferrer">
+      Back →
+    </a>
+
+    <p class="note">
+      Click above to open the BCC Friend Form.
+      Submitting the form does not automatically guarantee
+      any membership or special status.
+    </p>
+
+    <footer>
+      © 2026 Bharat Cyber Commando (BCC)<br>
+      Securing India, Developing Indian Software<br>
+      LEARN • CODE • BUILD
+    </footer>
+
+  </main>
+</body>
+
+</html>

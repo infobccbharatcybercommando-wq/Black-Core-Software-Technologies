@@ -1,0 +1,881 @@
+<!DOCTYPE html>  
+<html lang="en">    
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<meta name="theme-color" content="#06101e">    
+<title>BCC | Bharat Cyber Commando</title>    
+<link rel="icon" type="image/jpeg" href="assets/images/bcc-logo.jpeg">  
+<style>    
+:root{    
+  --bg:#040914;--panel:#0a1628;--panel2:#0e2340;    
+  --cyan:#42e8ff;--blue:#248aff;--gold:#f6c76b;    
+  --text:#f3f7ff;--muted:#a9bad0;--line:#24415e;    
+}    
+*{box-sizing:border-box;margin:0;padding:0}    
+html{scroll-behavior:smooth;scroll-padding-top:90px}    
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}    
+button,a{font:inherit}button{cursor:pointer}    
+a{color:inherit;text-decoration:none}    
+img,video{display:block;max-width:100%}    
+.hidden{display:none!important}    
+.container{width:min(1200px,92%);margin:auto}    
+section{padding:66px 0}    
+h1,h2,h3{line-height:1.2}    
+.muted{color:var(--muted)}    
+.eyebrow{font-size:12px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;font-weight:800;margin-bottom:12px}    
+.section-title{font-size:clamp(28px,4vw,42px)}    
+.section-subtitle{color:var(--muted);margin-top:10px}    
+.panel{background:linear-gradient(145deg,#0d2038,#07111f);border:1px solid var(--line);border-radius:16px;overflow:hidden}    
+.btn{    
+  border:1px solid var(--cyan);border-radius:9px;padding:12px 18px;    
+  background:#0b2b44;color:white;display:inline-flex;justify-content:center;    
+  align-items:center;gap:7px;transition:.2s;min-height:44px;font-weight:600;
+}    
+.btn:hover{background:#124568;transform:translateY(-1px)}    
+.btn.primary{background:linear-gradient(100deg,#1688db,#31d5df);border-color:transparent;color:#04101c;font-weight:800}    
+.btn.ghost{background:transparent;border-color:var(--line)}    
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}    
+header{position:sticky;top:0;z-index:50;background:#040914ed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}    
+.header-row{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}    
+.brand{display:flex;align-items:center;gap:10px;min-width:150px}    
+.brand img{width:45px;height:45px;object-fit:contain}    
+.brand strong{display:block;font-size:17px;letter-spacing:1px}    
+.brand small{display:block;color:var(--cyan);font-size:10px;letter-spacing:1px}    
+.header-buttons{display:flex;gap:8px;align-items:center;flex-wrap:wrap}    
+.header-buttons .btn{font-size:13px;padding:10px 14px}    
+#overviewNav{display:none}    
+#overviewScreen.active #overviewNav{display:flex}    
+#homeScreen{min-height:100vh}    
+.home-hero{padding:38px 0 58px}    
+.home-copy{padding:22px 0 28px}    
+.home-copy h1{font-size:clamp(38px,6vw,72px);letter-spacing:-2px}    
+.home-copy h1 span{color:var(--cyan)}    
+.home-copy p{max-width:720px;color:var(--muted);font-size:17px;margin-top:17px}    
+.hero-video-wrap{margin:20px auto 24px}    
+.media-title{font-size:13px;letter-spacing:1px;color:var(--cyan);padding:13px 16px 0}    
+.top-video{width:100%;height:clamp(190px,40vw,460px);object-fit:cover;background:#020711;border-radius:0 0 14px 14px}    
+.hero-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}    
+.hero-panel{min-width:0}    
+.hero-panel img,.hero-panel video{width:100%;height:clamp(180px,24vw,290px);object-fit:cover;background:#030914}    
+.hero-panel .media-label{padding:12px 14px;color:var(--cyan);font-size:12px;letter-spacing:1px}    
+.hero-panel p{padding:0 14px 15px;color:var(--muted);font-size:13px}    
+#middleMedia{position:relative}    
+#middleMedia .event-date{color:var(--gold);font-weight:800}    
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}    
+.stat{background:#0b1b30;border:1px solid var(--line);border-radius:12px;padding:12px 17px}    
+.stat strong{display:block;color:var(--cyan);font-size:22px}    
+.stat span{font-size:11px;color:var(--muted)}    
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:25px}    
+.card{padding:18px}    
+.card img{width:100%;height:185px;object-fit:cover;border-radius:11px;border:1px solid var(--line);background:#06101e}    
+.card h3{font-size:19px;margin:13px 0 7px}    
+.card p{font-size:14px;color:var(--muted)}    
+.role{color:var(--cyan)!important;font-size:12px!important}    
+.tag{font-size:11px;color:var(--cyan);letter-spacing:1px;text-transform:uppercase}    
+.event-cover{width:100%;max-height:540px;object-fit:contain;background:#020711;border:1px solid var(--line);border-radius:14px;margin-top:25px}    
+.event-category{margin-top:30px}    
+.event-category h3{margin-bottom:14px;font-size:22px}    
+.event-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}    
+.event-card{background:#091629;border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}    
+.event-card img{width:100%;height:110px;object-fit:cover;border-radius:8px;margin-bottom:9px}    
+.event-card time{display:block;color:var(--gold);font-weight:800;font-size:12px}    
+.event-card h4{font-size:14px;margin:5px 0}    
+.event-card p{font-size:12px;color:var(--muted)}    
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:25px}    
+.dashboard-box{padding:21px}    
+.dashboard-box strong{display:block;font-size:27px;color:var(--cyan)}    
+.dashboard-box span{color:var(--muted);font-size:12px}    
+.text-panel{padding:25px;margin-top:22px}    
+.text-panel h3{color:var(--cyan);margin:20px 0 7px}    
+.text-panel p,.text-panel li{color:#d0dced}    
+.text-panel ul{padding-left:22px}    
+.audio-toggle{    
+  position:fixed;right:17px;bottom:18px;z-index:100;width:52px;height:52px;    
+  border:1px solid var(--cyan);border-radius:50%;background:#071b31;    
+  color:var(--cyan);font-size:24px;box-shadow:0 0 18px #42e8ff30;display:flex;align-items:center;justify-content:center;  
+}    
+footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted);font-size:13px}    
+.footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}    
+.section{background:#0a0f19;border:1px solid #1d2a40;border-radius:14px;padding:30px;margin-bottom:30px;box-shadow:0 0 25px rgba(0,0,0,0.25)}
+.section h2{color:#42c8ff;margin-bottom:20px;font-size:27px}
+.section h3{color:#8ddcff;margin-top:25px;margin-bottom:10px;font-size:20px}
+.section p{margin-bottom:12px;color:#e3e9f2}
+.section ul{padding-left:28px;margin:10px 0 15px}
+.section li{margin-bottom:9px;color:#e3e9f2}
+.article{margin-top:30px;padding-top:20px;border-top:1px solid #1d2a40}
+.article:first-of-type{border-top:none;margin-top:0}
+.article-title{color:#42c8ff;font-size:22px;margin-bottom:15px}
+.quote{border-left:4px solid #42c8ff;padding:15px 18px;background:#0d1420;margin:15px 0;color:#dce8f5;font-style:italic}
+.numbered{padding-left:28px}
+.numbered li{margin-bottom:12px}
+.manifesto-box{background:#080e18;border:1px solid #223652;border-radius:12px;padding:22px;margin-top:15px}
+.manifesto-item{padding:14px 0;border-bottom:1px solid #1c2a3d}
+.manifesto-item:last-child{border-bottom:none}
+.manifesto-item strong{color:#42c8ff}
+.oath{text-align:center;font-size:17px}
+.oath p{margin-bottom:18px}
+.anthem{background:#080e18;border-radius:12px;border:1px solid #223652;padding:25px;text-align:center}
+.anthem h3{margin-top:5px}
+.anthem p{margin:18px 0}
+.anthem-title{color:#42c8ff;font-size:21px;font-weight:bold}
+@media(max-width:900px){    
+ .event-grid{grid-template-columns:repeat(2,minmax(0,1fr))}    
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}    
+ .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}    
+ .header-row{align-items:flex-start;padding:12px 0;flex-direction:column}    
+ .header-buttons{width:100%}    
+ #overviewNav{flex-wrap:wrap}    
+}    
+@media(max-width:620px){    
+ .hero-columns{grid-template-columns:1fr}    
+ .hero-panel img,.hero-panel video{height:230px}    
+ .grid,.event-grid{grid-template-columns:1fr}    
+ .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}    
+ section{padding:48px 0}    
+ .home-copy h1{letter-spacing:-1px}    
+ .header-buttons .btn{flex:1}    
+}    
+</style>  
+</head>  
+<body>    
+<!-- Background Audio -->    
+<audio id="bccAudio" src="assets/audio/bcc-background-audio.mpga" loop preload="auto"></audio>    
+<button class="audio-toggle" id="musicToggle" aria-label="Play background music" title="Play background music">♪</button>  
+
+<!-- HOME SCREEN -->  
+<div id="homeScreen">    
+  <header>    
+    <div class="container header-row">    
+      <a class="brand" href="#" aria-label="BCC Home">    
+        <img src="assets/images/bcc-logo.jpeg" alt="BCC Logo">    
+        <span><strong>BCC</strong><small>BHARAT CYBER COMMANDO</small></span>    
+      </a>    
+      <div class="header-buttons">    
+        <button class="btn primary" id="nextButton">Next →</button>    
+      </div>    
+    </div>    
+  </header>  
+
+  <main class="container home-hero">    
+    <div class="home-copy">    
+      <div class="eyebrow">Learn • Code • Build</div>    
+      <h1>Bharat Cyber<br><span>Commando</span></h1>    
+      <p>Securing India, Developing Indian Software. Learn technology, create useful software and build projects through teamwork and responsible innovation.</p>    
+      <div class="stats">    
+        <div class="stat"><strong>03</strong><span>Team Members</span></div>    
+        <div class="stat"><strong>02</strong><span>Divisions</span></div>    
+        <div class="stat"><strong>07</strong><span>Listed Projects</span></div>    
+      </div>    
+    </div>    
+
+    <!-- VIDEO ABOVE THREE PANELS -->    
+    <div class="panel hero-video-wrap">    
+      <div class="media-title">BCC INTRO VIDEO</div>    
+      <video class="top-video" src="assets/videos/bcc-intro.mp4" autoplay muted loop playsinline controls poster="assets/images/bcc-hero.jpg"></video>    
+    </div>    
+
+    <!-- THREE SIDE-BY-SIDE PANELS (Using hero1.jpg and hero2.JPEG as requested) -->    
+    <div class="hero-columns">    
+      <article class="panel hero-panel">    
+        <div class="media-label">HERO IMAGE 1 • BCC</div>    
+        <img src="assets/images/hero1.jpeg" alt="BCC Hero 1">    
+        <p>Bharat Cyber Commando</p>    
+      </article>  
+
+      <article class="panel hero-panel" id="middleMedia">    
+        <div class="media-label">TODAY'S EVENT</div>    
+        <img id="todayEventImage" src="assets/images/event.jpg" alt="Today's BCC event" class="hidden">    
+        <video id="fallbackVideo" src="assets/videos/bcc-intro.mp4" autoplay muted loop playsinline poster="assets/images/hero2.JPEG"></video>    
+        <p id="todayEventCaption">BCC intro video</p>    
+      </article>    
+
+      <article class="panel hero-panel">    
+        <div class="media-label">HERO IMAGE 2 • TEAM</div>    
+        <img src="assets/images/hero2.jpeg" alt="BCC Hero 2">    
+        <p>Learn • Code • Build • Innovate</p>    
+      </article>    
+    </div>    
+
+    <div class="btn-row">    
+      <button class="btn primary" id="nextButtonBottom">Explore BCC →</button>    
+    </div>    
+  </main>    
+</div>  
+
+<!-- OVERVIEW / MAIN WEBSITE -->  
+<div id="overviewScreen" class="hidden">    
+  <header>    
+    <div class="container header-row">    
+      <a class="brand" href="#overview" aria-label="BCC Overview">    
+        <img src="assets/images/bcc-logo.jpeg" alt="BCC Logo">    
+        <span><strong>BCC</strong><small>LEARN • CODE • BUILD</small></span>    
+      </a>    
+      <div class="header-buttons">    
+        <button class="btn ghost" id="backHomeButton">← Home</button>    
+        <button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>    
+      </div>    
+      <nav id="overviewNav" class="header-buttons">    
+        <a class="btn ghost" href="#overview">Overview</a>    
+        <a class="btn ghost" href="#events">Events</a>    
+        <a class="btn ghost" href="#divisions">Divisions</a>    
+        <a class="btn ghost" href="#team">Team</a>    
+        <a class="btn ghost" href="#projects">Projects</a>    
+        <a class="btn ghost" href="#dashboard">Dashboard</a>    
+        <a class="btn ghost" href="#constitution">Constitution</a>    
+        <a class="btn ghost" href="#manifesto">Manifesto</a>    
+        <a class="btn ghost" href="#oath">Oath</a>    
+        <a class="btn ghost" href="#anthem">Anthem</a>      
+        <a class="btn ghost" href="join.html">Join</a>    
+        <a class="btn ghost" href="friend.html">Friend</a>    
+        <a class="btn ghost" href="#contact">Contact</a>    
+      </nav>    
+    </div>    
+  </header>  
+
+  <main>    
+    <section id="overview">    
+      <div class="container">    
+        <div class="eyebrow">Organization Overview</div>    
+        <h2 class="section-title">Build a Better Tomorrow</h2>    
+        <p class="section-subtitle">Bharat Cyber Commando (BCC) is an independent software development organization focused on cybersecurity, software development, and innovation. Our motto is “Securing India, Developing Indian Software.” We believe in “LEARN • CODE • BUILD” and aim to develop innovative technology solutions for India.</p>
+        <div class="grid">    
+          <article class="panel card">    
+            <img src="assets/images/bcc-logo.jpeg" alt="BCC overview">    
+            <span class="tag">BCC</span><h3>Bharat Cyber Commando</h3>    
+          <p>Bharat Cyber Commando (BCC) is an independent software development organization focused on cybersecurity, software development, and innovation.</p>    
+          </article>    
+          <article class="panel card">    
+            <img src="assets/images/code-command.jpeg" alt="Code Command">    
+            <span class="tag">Division One</span><h3>Code Command</h3>    
+            <p>Programming, graphic design, editing and video creation.</p>    
+          </article>    
+          <article class="panel card">    
+            <img src="assets/images/scdias.jpeg" alt="SCDIAS">    
+            <span class="tag">Division Two</span><h3>SCDIAS</h3>    
+            <p>Secure Cyber Defence &amp; Intelligence Agency Squad.</p>    
+          </article>    
+        </div>    
+      </div>    
+    </section>  
+
+    <section id="events">    
+      <div class="container">    
+        <div class="eyebrow">Calendar & Celebrations</div>    
+        <h2 class="section-title">Events</h2>    
+        <p class="section-subtitle">BCC events, birthdays, national events, religious festivals and worldwide observances.</p>    
+        <img class="event-cover" src="assets/images/event.jpeg" alt="BCC Events banner">    
+
+        <div class="event-category">    
+          <h3>⭐ BCC Events</h3>    
+          <div class="event-grid">    
+            <article class="event-card"><time>1 January</time><h4>Coding Day</h4><p>Learn • Code • Build</p></article>    
+            <article class="event-card"><time>10 April</time><h4>Tool Launch Day</h4><p>Tool showcase</p></article>    
+            <article class="event-card"><time>15 May</time><h4>Innovation Day</h4><p>Ideas into projects</p></article>    
+            <article class="event-card"><time>1 June</time><h4>AI Development Day</h4><p>Development activity</p></article>    
+            <article class="event-card"><time>5 June</time><h4>AI Development Day</h4><p>Development milestone</p></article>    
+            <article class="event-card"><time>11 June</time><h4>Internal Hackathon Day</h4><p>Collaborate and build</p></article>    
+            <article class="event-card"><time>15 June</time><h4>Project Review Day</h4><p>Plan • Build • Improve</p></article>    
+            <article class="event-card"><time>20 June</time><h4>AI Development Day</h4><p>Development activity</p></article>    
+            <article class="event-card"><time>5 July</time><h4>Security Practice Day</h4><p>Responsible security learning</p></article>    
+            <article class="event-card"><time>15 July</time><h4>SCDIAS Launch Day</h4><p>Launch milestone</p></article>    
+            <article class="event-card"><time>15 August</time><h4>Foundation Day</h4><p>Celebrating BCC's founding</p></article>    
+            <article class="event-card"><time>28 August</time><h4>Activation Day</h4><p>A new chapter begins</p></article>    
+            <article class="event-card"><time>1 September</time><h4>Development Review</h4><p>Review progress</p></article>    
+            <article class="event-card"><time>15 September</time><h4>Technology Awareness Day</h4><p>Learn today • Build tomorrow</p></article>    
+            <article class="event-card"><time>15 December</time><h4>Project Day</h4><p>Showcase project progress</p></article>    
+            <article class="event-card"><time>31 December</time><h4>Year-End Review Day</h4><p>Review and reflect</p></article>    
+          </div>    
+        </div>    
+
+        <div class="event-category">    
+          <h3>🎂 BCC Team Birthdays</h3>    
+          <div class="grid">    
+            <article class="panel card"><img src="assets/images/SHAVEZ.jpg" alt="Shavez"><time>19 February</time><h3>Mohammad Shavez Wali Khan</h3><p>Founder, CEO &amp; Lead Developer</p></article>    
+            <article class="panel card"><img src="assets/images/OM.jpeg" alt="Om"><time>5 June</time><h3>Om Bhandari</h3><p>Co-Founder, Assistant &amp; Senior Developer</p></article>    
+            <article class="panel card"><img src="assets/images/UVAIS BHAI.jpeg" alt="Uvais"><time>14 August</time><h3>Mohammad Uvais Wali Khan</h3><p>Co-Founder, Coach &amp; Technical Mentor</p></article>    
+          </div>    
+        </div>    
+      </div>    
+    </section>  
+
+    <section id="divisions">    
+      <div class="container">    
+        <div class="eyebrow">Our Structure</div>
+        <h2 class="section-title">Divisions</h2>    
+        <div class="grid">    
+          <article class="panel card"><img src="assets/images/code-command.jpeg" alt="Code Command"><h3>Code Command</h3><p>Programming, graphic designing/editing and video editing/designing.</p></article>    
+          <article class="panel card"><img src="assets/images/scdias.jpeg" alt="SCDIAS"><h3>SCDIAS</h3><p>Secure Cyber Defence &amp; Intelligence Agency Squad. Focused on responsible defensive security learning.</p></article>    
+        </div>    
+      </div>    
+    </section>  
+
+    <section id="team">    
+      <div class="container">    
+        <div class="eyebrow">The People Behind BCC</div>
+        <h2 class="section-title">Team</h2>    
+        <div class="grid">    
+          <article class="panel card"><img src="assets/images/SHAVEZ.jpg" alt="Shavez"><h3>Mohammad Shavez Wali Khan</h3><p class="role">Founder, CEO &amp; Lead Developer</p> <a class="btn ghost" href="http://mohammmad-shavez-wali-khan-portfoli.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a> </article>    
+          <article class="panel card"><img src="assets/images/OM.jpeg" alt="Om"><h3>Om Bhandari</h3><p class="role">Co-Founder, Assistant &amp; Senior Developer</p> <a class="btn ghost" href="https://om-bhandari-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer">Portfolio</a> </article>    
+          <article class="panel card"><img src="assets/images/UVAIS BHAI.jpeg" alt="Uvais"><h3>Mohammad Uvais Wali Khan</h3><p class="role">Co-Founder, Coach &amp; Technical Mentor</p></article>    
+        </div>    
+      </div>    
+    </section>  
+
+    <section id="projects">    
+      <div class="container">    
+        <div class="eyebrow">Build the Future</div>
+        <h2 class="section-title">Projects</h2>    
+        <div class="grid">    
+          <article class="panel card"><h3>BCC Website</h3><p>Official BCC information and project website.</p></article>    
+          <article class="panel card"><h3>Sentinel</h3><p>Proposed AI-powered business and security platform.</p></article>    
+          <article class="panel card"><h3>InfoVerse</h3><p>Proposed knowledge and information platform.</p></article>    
+          <article class="panel card"><h3>Lumexa</h3><p>Proposed social sharing platform.</p></article>    
+          <article class="panel card"><h3>Pixelhive AI</h3><p>Planned AI assistant project.</p></article>    
+          <article class="panel card"><h3>BCC Games</h3><p>A collection of games and interactive projects.</p></article>    
+          <article class="panel card"><h3>Project Death</h3><p>BCC project name; public description can be added later.</p></article>    
+        </div>    
+      </div>    
+    </section>  
+
+    <section id="dashboard">    
+      <div class="container">    
+        <div class="eyebrow">Organization Overview</div>
+        <h2 class="section-title">BCC Dashboard</h2>    
+        <div class="dashboard-grid">    
+          <div class="panel dashboard-box"><strong>03</strong><span>Team Members</span></div>    
+          <div class="panel dashboard-box"><strong>02</strong><span>Divisions</span></div>    
+          <div class="panel dashboard-box"><strong>07</strong><span>Listed Projects</span></div>    
+          <div class="panel dashboard-box"><strong>15 Aug</strong><span>Foundation Day</span></div>    
+        </div>    
+      </div>    
+    </section>    
+
+    <!-- FULL CONSTITUTION (Articles I - XX, Signatures, Schedule I) -->
+    <section id="constitution">    
+      <div class="container">    
+        <div class="eyebrow">Organization Principles</div>
+        <h2 class="section-title">Constitution</h2>    
+        <div class="panel text-panel">    
+          <h2>📘 CONSTITUTION OF BHARAT CYBER COMMANDO</h2>  
+          <p><strong>BCC — Bharat Cyber Commando</strong></p>    
+          <p><strong>Motto:</strong> Securing India, Developing Indian Software</p>    
+          <p><strong>Adopted:</strong> 15 August 2025</p>    
+          <p><strong>Status:</strong> Internal Organizational Constitution</p>    
+          <p><strong>Nature:</strong> Unincorporated Software Development Organization</p>    
+
+          <div class="article">    
+            <h3 class="article-title">PREAMBLE</h3>    
+            <p>We, the members of Bharat Cyber Commando (BCC), establish this Constitution to provide an organized framework for the governance, management, development, and operation of BCC.</p>    
+            <p>BCC is established as a software-focused organization dedicated to learning, developing, maintaining, and promoting responsible software and technology.</p>    
+            <p>This Constitution shall serve as the supreme internal governing document of BCC, subject always to applicable law.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE I — NAME AND IDENTITY</h3>    
+            <h3>Section 1. Name</h3>    
+            <p>The organization shall be known as Bharat Cyber Commando, abbreviated as BCC.</p>    
+            <h3>Section 2. Motto</h3>    
+            <p>The official motto of BCC shall be:</p>    
+            <div class="quote">“Securing India, Developing Indian Software.”</div>    
+            <h3>Section 3. Nature</h3>    
+            <p>BCC shall operate as an unincorporated software development organization/team unless and until a separate legal entity is formally established.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE II — OBJECTS AND PURPOSES</h3>    
+            <p>The principal purposes of BCC shall include:</p>    
+            <ol class="numbered">    
+              <li>Developing software, websites, applications, games, and digital tools.</li>    
+              <li>Promoting programming and software-development skills.</li>    
+              <li>Conducting responsible cybersecurity learning and development.</li>    
+              <li>Designing and maintaining original digital products.</li>    
+              <li>Encouraging innovation, teamwork, research, and technical education.</li>    
+              <li>Developing software intended to contribute positively to India and its digital ecosystem.</li>    
+            </ol>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE III — ORGANIZATIONAL STRUCTURE</h3>    
+            <p>BCC shall consist of:</p>    
+            <ol class="numbered">    
+              <li>The Founder</li>    
+              <li>Executive Leadership</li>    
+              <li>Divisions</li>    
+              <li>Officers and Department Heads</li>    
+              <li>Developers and other members</li>    
+              <li>Project Teams</li>    
+            </ol>    
+            <p>The organizational structure may be expanded by constitutional amendment or executive establishment consistent with this Constitution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE IV — THE FOUNDER</h3>    
+            <h3>Section 1. Office</h3>    
+            <p>The Founder shall be the person who established BCC.</p>    
+            <h3>Section 2. Responsibilities</h3>    
+            <p>The Founder shall:</p>    
+            <ul>    
+              <li>safeguard the identity and mission of BCC;</li>    
+              <li>provide strategic direction;</li>    
+              <li>appoint or approve senior leadership;</li>    
+              <li>oversee major organizational decisions;</li>    
+              <li>protect the Constitution and core principles.</li>    
+            </ul>    
+            <h3>Section 3. Succession</h3>    
+            <p>Any permanent transfer of the Founder’s constitutional authority shall require a formal procedure established under this Constitution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE V — CHIEF EXECUTIVE OFFICER</h3>    
+            <h3>Section 1. Office</h3>    
+            <p>The Chief Executive Officer (CEO) shall serve as the principal executive authority responsible for the day-to-day administration and strategic execution of BCC.</p>    
+            <h3>Section 2. Powers</h3>    
+            <p>The CEO may:</p>    
+            <ul>    
+              <li>direct organizational operations;</li>    
+              <li>establish project teams;</li>    
+              <li>assign responsibilities;</li>    
+              <li>supervise development activities;</li>    
+              <li>approve operational decisions;</li>    
+              <li>represent BCC in appropriate organizational matters.</li>    
+            </ul>    
+            <h3>Section 3. Limitations</h3>    
+            <p>The CEO shall exercise authority in accordance with this Constitution and applicable law.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE VI — EXECUTIVE MANAGEMENT</h3>    
+            <p>Executive Management shall consist of officers appointed under BCC's organizational structure.</p>    
+            <p>Possible offices may include:</p>    
+            <ul>    
+              <li>Chief Executive Officer</li>    
+              <li>Chief Technology Officer</li>    
+              <li>Chief Operating Officer</li>    
+              <li>Chief Information Security Officer</li>    
+              <li>Division Directors</li>    
+              <li>Project Leads</li>    
+              <li>Senior Developers</li>    
+            </ul>    
+            <p>An office shall possess only those powers assigned to it by this Constitution or lawful organizational resolution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE VII — DIVISIONS</h3>    
+            <p>BCC may establish specialized divisions for specific areas of work.</p>    
+            <h3>Existing Divisions</h3>    
+            <p><strong>1. Code Command</strong><br>Responsible for software development, programming, digital design, and related development activities.</p>    
+            <p><strong>2. SCDIAS</strong><br>Secure Cyber Defence & Intelligence Agency Squad, responsible for responsible cybersecurity education, defensive security projects, and authorized security research.</p>    
+            <p>Division names, functions, and structures may be amended through organizational resolution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE VIII — MEMBERSHIP</h3>    
+            <h3>Section 1. Eligibility</h3>    
+            <p>Membership shall be granted according to criteria established by BCC.</p>    
+            <h3>Section 2. Member Duties</h3>    
+            <p>Every member shall:</p>    
+            <ul>    
+              <li>follow this Constitution;</li>    
+              <li>perform assigned responsibilities;</li>    
+              <li>respect other members;</li>    
+              <li>protect confidential organizational information;</li>    
+              <li>follow applicable laws;</li>    
+              <li>use technology responsibly.</li>    
+            </ul>    
+            <h3>Section 3. Membership Status</h3>    
+            <p>Members may hold different positions, ranks, or responsibilities according to their role and contribution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE IX — APPOINTMENT AND REMOVAL</h3>    
+            <p>Officers and project leaders may be appointed according to the authority assigned by this Constitution.</p>    
+            <p>An officer may be removed for:</p>    
+            <ul>    
+              <li>serious violation of the Constitution;</li>    
+              <li>misuse of organizational authority;</li>    
+              <li>serious misconduct;</li>    
+              <li>abandonment of assigned responsibilities;</li>    
+              <li>other grounds established by organizational procedure.</li>    
+            </ul>    
+            <p>Fair internal procedure should be followed before significant disciplinary action.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE X — PROJECTS AND INTELLECTUAL PROPERTY</h3>    
+            <h3>Section 1. Projects</h3>    
+            <p>BCC projects shall be formally identified and maintained under appropriate project records.</p>    
+            <h3>Section 2. Ownership</h3>    
+            <p>Ownership and licensing of software shall be determined according to the applicable agreement, contribution records, and law.</p>    
+            <h3>Section 3. Attribution</h3>    
+            <p>Members who make substantial contributions shall receive appropriate credit.</p>    
+            <h3>Section 4. Repositories</h3>    
+            <p>Source code may be maintained through appropriate version-control systems and repository-management procedures.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XI — CONFIDENTIALITY AND INFORMATION SECURITY</h3>    
+            <p>Members shall take reasonable measures to protect:</p>    
+            <ul>    
+              <li>source code;</li>    
+              <li>credentials;</li>    
+              <li>private project information;</li>    
+              <li>internal documents;</li>    
+              <li>security-related information;</li>    
+              <li>personal information.</li>    
+            </ul>    
+            <p>No member shall intentionally obtain unauthorized access to systems, accounts, or information.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XII — CODE OF CONDUCT</h3>    
+            <p>All members shall conduct themselves with:</p>    
+            <ul>    
+              <li>integrity;</li>    
+              <li>professionalism;</li>    
+              <li>respect;</li>    
+              <li>responsibility;</li>    
+              <li>technical discipline;</li>    
+              <li>lawful and ethical behavior.</li>    
+            </ul>    
+            <p>BCC shall not authorize activities intended to unlawfully compromise, damage, disrupt, or steal from computer systems.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XIII — MEETINGS AND RESOLUTIONS</h3>    
+            <p>BCC may conduct:</p>    
+            <ul>    
+              <li>General Meetings</li>    
+              <li>Executive Meetings</li>    
+              <li>Division Meetings</li>    
+              <li>Project Meetings</li>    
+            </ul>    
+            <p>Major organizational decisions may be recorded through formal Resolutions.</p>    
+            <p>A Resolution shall identify:</p>    
+            <ol class="numbered">    
+              <li>the matter under consideration;</li>    
+              <li>the decision;</li>    
+              <li>the authority approving it;</li>    
+              <li>the date of adoption.</li>    
+            </ol>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XIV — FINANCIAL ADMINISTRATION</h3>    
+            <p>If BCC receives or generates funds, appropriate records shall be maintained.</p>    
+            <p>Financial activity shall be conducted lawfully and transparently.</p>    
+            <p>No member shall personally misuse organizational funds.</p>    
+            <p>Any future commercial activity shall comply with applicable legal requirements.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XV — RECORDS AND DOCUMENTATION</h3>    
+            <p>BCC shall maintain organizational records where appropriate, including:</p>    
+            <ul>    
+              <li>Constitution and amendments;</li>    
+              <li>organizational resolutions;</li>    
+              <li>project records;</li>    
+              <li>member records;</li>    
+              <li>development documentation;</li>    
+              <li>financial records, where applicable;</li>    
+              <li>intellectual-property records.</li>    
+            </ul>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XVI — CONSTITUTIONAL AMENDMENTS</h3>    
+            <h3>Section 1 — Proposal</h3>    
+            <p>Any proposed amendment to this Constitution shall be submitted in writing to the authorized leadership of BCC.</p>    
+            <h3>Section 2 — Notice of Meeting</h3>    
+            <p>Before an amendment is considered, an official Constitutional Amendment Meeting shall be called with reasonable notice.</p>    
+            <h3>Section 3 — Meeting</h3>    
+            <p>The proposed amendment shall be presented and discussed openly.</p>    
+            <h3>Section 4 — Amendment Resolution</h3>    
+            <p>Placed before the meeting as an Amendment Resolution.</p>    
+            <h3>Section 5 — Approval</h3>    
+            <p>Takes effect only when it receives required approval under voting provisions.</p>    
+            <h3>Section 6 — Recording</h3>    
+            <p>Recorded in the official Constitutional Amendment Register.</p>    
+            <h3>Section 7 — Effective Date</h3>    
+            <p>Takes effect immediately after adoption unless specified otherwise.</p>    
+            <h3>Section 8 — Publication</h3>    
+            <p>Updated Constitution shall be maintained as the current official version.</p>    
+            <h3>Section 9 — No Informal Amendment</h3>    
+            <p>No amendment is valid unless prescribed procedure is followed.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XVII — DISSOLUTION</h3>    
+            <p>If BCC is formally dissolved, its projects, intellectual property, digital assets, records, and other organizational property shall be handled according to applicable agreements and law.</p>    
+            <p>Any outstanding obligations shall be addressed before final closure.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XVIII — TRANSITIONAL PROVISIONS</h3>    
+            <p>Until additional officers, divisions, procedures, and members are formally established, existing leadership may temporarily perform functions necessary for the continued operation of BCC, subject to this Constitution.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XIX — SUPREMACY OF THE CONSTITUTION</h3>    
+            <p>This Constitution shall constitute the highest internal governing document of BCC. All internal policies, regulations, resolutions, and organizational procedures shall be consistent with it.</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">ARTICLE XX — ADOPTION</h3>    
+            <p>This Constitution is hereby adopted as the foundational internal governing document of Bharat Cyber Commando (BCC).</p>    
+            <p><strong>Organization:</strong> Bharat Cyber Commando</p>    
+            <p><strong>Abbreviation:</strong> BCC</p>    
+            <p><strong>Motto:</strong> Securing India, Developing Indian Software</p>    
+            <p><strong>Adoption Date:</strong> 15 August 2025</p>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">SIGNATURES</h3>    
+            <div class="signature">    
+              <p><strong>Founder / Chief Executive Officer:</strong><br>Mohammad Shavez Wali Khan</p>    
+              <p><strong>Co-Founder:</strong><br>Om Bhandari</p>    
+              <p><strong>Co-Founder / Technical Mentor:</strong><br>Mohammad Uvais Wali Khan</p>    
+            </div>    
+          </div>    
+
+          <div class="article">    
+            <h3 class="article-title">SCHEDULE I — OFFICIAL ORGANIZATIONAL PRINCIPLE</h3>    
+            <div class="quote">LEARN • CODE • BUILD</div>    
+            <p>BCC shall seek to transform learning and ideas into useful software through disciplined development, collaboration, innovation, and responsible technology.</p>    
+          </div>    
+        </div>    
+      </div>    
+    </section>  
+
+    <!-- FULL MANIFESTO -->
+    <section id="manifesto">    
+      <div class="container">    
+        <div class="eyebrow">Our Direction</div>
+        <h2 class="section-title">Manifesto</h2>    
+        <div class="panel text-panel">    
+          <h2>📜 BCC MANIFESTO</h2>      
+          <div class="manifesto-box">    
+            <div class="manifesto-item">    
+              <strong>1. LEARN — Knowledge First</strong>    
+              <p>BCC believes that learning is the foundation of technology. Members shall continuously improve their knowledge and skills.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>2. CODE — Turn Knowledge Into Technology</strong>    
+              <p>BCC shall transform knowledge and ideas into useful software, websites, applications, games, and digital tools.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>3. BUILD — Create Useful Projects</strong>    
+              <p>BCC shall encourage members to build practical projects that solve problems and provide useful digital solutions.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>4. Responsible Cybersecurity</strong>    
+              <p>BCC shall promote responsible, defensive, ethical, and lawful cybersecurity learning and research.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>5. Indian Software Development</strong>    
+              <p>BCC shall encourage the development of original software and digital technology that can contribute positively to India's digital ecosystem.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>6. Innovation and Research</strong>    
+              <p>BCC shall encourage experimentation, research, creative ideas, and the development of new technological solutions.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>7. Teamwork and Respect</strong>    
+              <p>BCC members shall work together with discipline, respect, cooperation, and responsibility.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>8. Quality and Continuous Improvement</strong>    
+              <p>BCC shall aim to improve its software, projects, systems, documentation, and technical standards continuously.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>9. Ethical and Lawful Technology</strong>    
+              <p>BCC technology shall be developed and used responsibly, ethically, safely, and according to applicable law.</p>    
+            </div>    
+            <div class="manifesto-item">    
+              <strong>10. Build the Future Through Technology</strong>    
+              <p>BCC shall seek to develop future-ready technology through learning, coding, building, teamwork, innovation, and responsible development.</p>    
+            </div>  
+          </div>      
+          <div class="quote">LEARN • CODE • BUILD</div>  
+        </div>    
+      </div>    
+    </section>  
+
+    <!-- FULL OATH -->
+    <section id="oath">    
+      <div class="container">    
+        <div class="eyebrow">Our Commitment</div>
+        <h2 class="section-title">BCC Oath</h2>    
+        <div class="panel text-panel">
+          <h2>🤝 OATH OF BHARAT CYBER COMMANDO</h2>    
+          <div class="oath">    
+            <p>“I solemnly pledge that, as a member of Bharat Cyber Commando, I shall uphold the Constitution, values, and principles of BCC.</p>    
+            <p>I shall use my knowledge of software and technology responsibly, ethically, and lawfully.</p>    
+            <p>I shall respect my fellow members, protect the work and information entrusted to me, and carry out my responsibilities with honesty, discipline, and dedication.</p>    
+            <p>I shall learn, code, build, and continuously improve my skills for the development of useful and responsible software.</p>    
+            <p>I shall protect the integrity and reputation of BCC and never knowingly misuse its name, resources, or technology.</p>    
+            <p>With knowledge as my strength and responsibility as my duty, I pledge to serve the mission of BCC.”</p>    
+            <p><strong>LEARN • CODE • BUILD</strong></p>    
+            <p><strong>“Securing India, Developing Indian Software.”</strong></p>    
+          </div>  
+        </div>  
+      </div>    
+    </section>  
+
+    <!-- FULL ANTHEM -->
+    <section id="anthem">    
+      <div class="container">    
+        <div class="eyebrow">Original Anthem Draft</div>
+        <h2 class="section-title">The Light We Build</h2>    
+        <div class="panel text-panel">    
+          <h2>🎵 ANTHEM OF BHARAT CYBER COMMANDO</h2>  
+          <div class="anthem">    
+            <p class="anthem-title">BCC — Bharat Cyber Commando</p>    
+            <h3>Verse I</h3>    
+            <p>We rise with dreams, with minds awake,<br>We learn, we build, for progress' sake.<br>With every line of code we write,<br>We turn our vision into light.</p>    
+            <h3>Chorus</h3>    
+            <p>Bharat Cyber Commando, we stand as one,<br>With knowledge, courage, our work is begun.<br>Learn, Code, Build — our purpose strong,<br>Together we move, together belong.</p>    
+            <h3>Verse II</h3>    
+            <p>We build with reason, truth, and care,<br>We guard our work with wisdom rare.<br>Through every challenge, every test,<br>We give our effort and our best.</p>    
+            <h3>Chorus</h3>    
+            <p>Bharat Cyber Commando, we stand as one,<br>With knowledge, courage, our work is begun.<br>Learn, Code, Build — our purpose strong,<br>Together we move, together belong.</p>    
+            <h3>Bridge</h3>    
+            <p>For every idea, give it a chance,<br>For every problem, make progress advance.<br>With responsible technology as our guide,<br>We build the future side by side.</p>    
+            <h3>Final Chorus</h3>    
+            <p>Bharat Cyber Commando, our vision shines,<br>Through code and knowledge, our future aligns.<br>Learn, Code, Build — forever we strive,<br>Securing India, developing software, we thrive!</p>    
+            <p><strong>BCC</strong></p>    
+            <p><strong>LEARN • CODE • BUILD</strong></p>    
+            <p><strong>“Securing India, Developing Indian Software.”</strong></p>    
+          </div>    
+        </div>    
+      </div>    
+    </section>  
+
+    <!-- CONTACT -->
+    <section id="contact">    
+      <div class="container">    
+        <div class="eyebrow">Get in Touch</div>
+        <h2 class="section-title">Contact</h2>    
+        <div class="panel text-panel">    
+          <h3>Bharat Cyber Commando</h3>    
+          <p>Securing India, Developing Indian Software.</p>    
+          <p style="margin-top:12px">Email: <a style="color:var(--cyan)" href="mailto:info.bcc.bhartcybercommando@gmail.com">info.bcc.bhartcybercommando@gmail.com</a></p>    
+        </div>    
+        <div class="btn-row">
+          <button class="btn ghost" id="backHomeBottom">← Back to Home</button>
+          <button class="btn primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to Top</button>
+        </div>    
+      </div>    
+    </section>    
+  </main>  
+
+  <footer>
+    <div class="container footer-row">
+      <span>© <span id="year"></span> Bharat Cyber Commando</span>
+      <span>LEARN • CODE • BUILD</span>
+      <a href="#overview">Back to top ↑</a>
+    </div>
+  </footer>    
+</div>  
+
+<script>    
+const homeScreen = document.getElementById("homeScreen");    
+const overviewScreen = document.getElementById("overviewScreen");    
+const audio = document.getElementById("bccAudio");    
+const musicToggle = document.getElementById("musicToggle");    
+
+function showOverview(){
+  homeScreen.classList.add("hidden");
+  overviewScreen.classList.remove("hidden");
+  overviewScreen.classList.add("active");
+  history.replaceState({page:"overview"},"","#overview");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function showHome(){
+  overviewScreen.classList.add("hidden");
+  overviewScreen.classList.remove("active");
+  homeScreen.classList.remove("hidden");
+  history.replaceState({page:"home"},"",location.pathname+location.search);
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+document.getElementById("nextButton").addEventListener("click", showOverview);
+document.getElementById("nextButtonBottom").addEventListener("click", showOverview);
+document.getElementById("backHomeButton").addEventListener("click", showHome);
+document.getElementById("backHomeBottom").addEventListener("click", showHome);
+document.getElementById("year").textContent = new Date().getFullYear();
+
+musicToggle.addEventListener("click", async () => {
+  if(audio.paused){
+    try{
+      await audio.play();
+      musicToggle.textContent = "♫";
+      musicToggle.title = "Pause background music";
+      musicToggle.setAttribute("aria-label", "Pause background music");
+    }catch(error){
+      musicToggle.textContent = "♪";
+      musicToggle.title = "Tap to retry music";
+    }
+  }else{
+    audio.pause();
+    musicToggle.textContent = "♪";
+    musicToggle.title = "Play background music";
+    musicToggle.setAttribute("aria-label", "Play background music");
+  }
+});/* Har event ki apni alag image aur date ka configuration */
+const bccEvents = {
+  "01-01": {name:"Coding Day", image:"assets/images/coding-day.jpeg"},
+  "12-01": {name:"National Youth Day", image:"assets/images/youth-day.jpeg"},
+  "26-01": {name:"Republic Day", image:"assets/images/republic-day.jpeg"},
+  "19-02": {name:"Mohammad Shavez Wali Khan Birthday", image:"assets/images/SHAVEZ.jpg"},
+  "08-03": {name:"International Women's Day", image:"assets/images/womens-day.jpeg"},
+  "10-04": {name:"Tool Launch Day", image:"assets/images/tool-launch.jpeg"},
+  "14-04": {name:"Ambedkar Jayanti", image:"assets/images/ambedkar-jayanti.jpeg"},
+  "15-05": {name:"Innovation Day", image:"assets/images/innovation-day.jpeg"},
+  "01-06": {name:"AI Development Day", image:"assets/images/ai-dev-1.jpeg"},
+  "05-06": {name:"World Environment Day / Om Bhandari Birthday", image:"assets/images/OM.jpeg"},
+  "11-06": {name:"Internal Hackathon Day", image:"assets/images/hackathon.jpeg"},
+  "05-08": {name:"AI Development Day", image:"assets/images/ai-dev-2.jpg"},
+  "20-06": {name:"AI Development Day", image:"assets/images/ai-dev-3.jpg"},
+  "21-06": {name:"International Yoga Day", image:"assets/images/yoga-day.jpeg"},
+  "05-07": {name:"Security Practice Day", image:"assets/images/security-day.jpeg"},
+  "15-07": {name:"SCDIAS Launch Day", image:"assets/images/scdias-launch.jpeg"},
+  "14-08": {name:"Mohammad Uvais Wali Khan Birthday", image:"assets/images/UVAIS BHAI.jpeg"},
+  "15-08": {name:"BCC Foundation Day & Independence Day", image:"assets/images/independence-day.jpeg"},
+  "28-08": {name:"BCC Activation Day", image:"assets/images/activation-day.jpeg"},
+  "15-09": {name:"Technology Awareness Day", image:"assets/images/tech-awareness.jpeg"},
+  "02-10": {name:"Gandhi Jayanti", image:"assets/images/gandhi-jayanti.jpeg"},
+  "24-10": {name:"United Nations Day", image:"assets/images/un-day.jpeg"},
+  "10-12": {name:"Human Rights Day", image:"assets/images/human-rights.jpeg"},
+  "15-12": {name:"BCC Project Day", image:"assets/images/project-day.jpeg"},
+};
+
+function updateTodayMedia(){
+  const now = new Date();
+  const key = String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+  const event = bccEvents[key];
+  const image = document.getElementById("todayEventImage");
+  const video = document.getElementById("fallbackVideo");
+  const caption = document.getElementById("todayEventCaption");
+  
+  if(event){
+    image.src = event.image;
+    image.alt = event.name;
+    image.classList.remove("hidden");
+    video.classList.add("hidden");
+    caption.innerHTML = '<span class="event-date">'+event.name+'</span>';
+  } else {
+    image.classList.add("hidden");
+    video.classList.remove("hidden");
+    caption.textContent = "BCC intro video";
+  }
+}
+updateTodayMedia();
+
+
+if(location.hash === "#overview"){ showOverview(); }
+else{ showHome(); }
+</script>  
+</body>
+</html>
